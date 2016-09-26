@@ -9,7 +9,7 @@ try:
 
 	long_description = pypandoc.convert("README.md", "rst")
 	long_description = long_description.replace("\r", "")
-except OSError, ImportError:
+except (OSError, ImportError):
 	print "Pandoc not found. long_description conversion failure."
 
 	with open("README.md", encoding="utf-8") as f:
@@ -17,7 +17,7 @@ except OSError, ImportError:
 
 setup(
 	name="cfn",
-	version="0.0.5",
+	version="0.0.7",
 	description="Small script to manipulate AWS CloudFormation stacks",
 	long_description=long_description,
 	url="https://github.com/hagbarddenstore/cfn",
