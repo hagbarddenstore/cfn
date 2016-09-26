@@ -1,14 +1,15 @@
 from setuptools import setup, find_packages
 from codecs import open
 from os import path
-import pypandoc
 
 here = path.abspath(path.dirname(__file__))
 
 try:
+	import pypandoc
+
 	long_description = pypandoc.convert("README.md", "rst")
 	long_description = long_description.replace("\r", "")
-except OSError:
+except OSError, ImportError:
 	print "Pandoc not found. long_description conversion failure."
 
 	with open("README.md", encoding="utf-8") as f:
@@ -16,7 +17,7 @@ except OSError:
 
 setup(
 	name="cfn",
-	version="0.0.4",
+	version="0.0.5",
 	description="Small script to manipulate AWS CloudFormation stacks",
 	long_description=long_description,
 	url="https://github.com/hagbarddenstore/cfn",
