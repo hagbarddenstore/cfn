@@ -6,6 +6,8 @@ import json
 import os
 import getopt
 import sys
+import yaml
+import jinja2
 
 class Stack():
 	def __init__(self, name, **kwargs):
@@ -20,6 +22,8 @@ class Stack():
 		self._stacks_dir = os.path.join(os.getcwd(), "stacks")
 		self._templates_dir = os.path.join(os.getcwd(), "templates")
 		self._output_dir = os.path.join(os.getcwd(), "output")
+		self._debug = bool(kwargs.get("debug", False))
+		self._format_json = bool(kwargs.get("format-json", False))
 
 	def exists(self):
 		"""Check if the stack exists in the current AWS region"""
@@ -180,7 +184,7 @@ class Stack():
 		path = paths[0]
 
 		with open(os.path.join(self._output_dir, path), "w") as stream:
-			if self._debug:
+			if self._format_json or self._debug:
 				json.dump(template, stream, indent=4, sort_keys=True)
 			else:
 				json.dump(template, stream, sort_keys=True)
@@ -205,7 +209,8 @@ def main():
 		"region=",
 		"help",
 		"no-wait",
-		"debug"
+		"debug",
+		"format-json"
 	]
 
 	try:
@@ -229,6 +234,9 @@ def main():
 		if option == "--no-wait":
 			settings["no-wait"] = True
 
+		if option == "--format-json":
+			settings["format-json"] = True
+
 		if option == "--help" or option == "-h":
 			print help()
 
@@ -236,6 +244,7 @@ def main():
 
 		if option == "--debug":
 			debug = True
+			settings["debug"] = True
 
 	command = arguments[0]
 	name = arguments[1]
@@ -247,8 +256,6 @@ def main():
 		print "--no-wait=%s" % settings.get("no-wait", False)
 		print "command=%s" % command
 		print "name=%s" % name
-
-		sys.exit(0)
 
 	if command == "exists":
 		stack = Stack(name, **settings)
