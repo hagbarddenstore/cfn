@@ -144,7 +144,7 @@ class Stack():
 	def _load_generated(self):
 		names = self._generate_names("json")
 		for name in names:
-			path = os.join(self._output_dir, name)
+			path = os.path.join(self._output_dir, name)
 
 			if not os.path.exists(path):
 				continue

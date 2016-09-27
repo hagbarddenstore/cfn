@@ -9,7 +9,7 @@ with open("README.rst", encoding="utf-8") as f:
 
 setup(
 	name="cfn",
-	version="0.0.9",
+	version="0.0.10",
 	description="Small script to manipulate AWS CloudFormation stacks",
 	long_description=long_description,
 	url="https://github.com/hagbarddenstore/cfn",
