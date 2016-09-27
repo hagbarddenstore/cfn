@@ -192,7 +192,7 @@ class Stack():
 	def _generate_parameters(self):
 		parameters = []
 
-		for key, value in self._stack_data.get("parameters").iteritems():
+		for key, value in self._stack_data.get("parameters", {}).iteritems():
 			parameters.append({
 				"ParameterKey": key,
 				"ParameterValue": value,
